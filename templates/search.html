@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Search - Diagnostic Classification Database{% endblock %}
+
+{% block content %}
+<h2>Search Disorders</h2>
+
+<form action="/search" method="get" class="search-box">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search for disorders, symptoms, or diagnostic codes..." required>
+    <select name="system">
+        <option value="both" {% if system == 'both' %}selected{% endif %}>Both Systems</option>
+        <option value="dsm5" {% if system == 'dsm5' %}selected{% endif %}>DSM-5-TR Only</option>
+        <option value="icd11" {% if system == 'icd11' %}selected{% endif %}>ICD-11 Only</option>
+    </select>
+    <button type="submit" class="btn">Search</button>
+</form>
+
+{% if query %}
+<div style="margin: 20px 0;">
+    <p style="color: #666;">Showing results for: <strong>"{{ query }}"</strong></p>
+</div>
+
+{% if results %}
+    {% if system in ['both', 'dsm5'] and results.dsm5 %}
+    <div class="section-header">
+        <h2><span class="badge badge-dsm5">DSM-5-TR</span> Results ({{ results.dsm5|length }})</h2>
+    </div>
+    
+    {% for disorder in results.dsm5 %}
+    <div class="card">
+        <h3>
+            <span class="code">{{ disorder.code }}</span>
+            <a href="/disorder/dsm5/{{ disorder.code }}" style="color: #667eea; text-decoration: none;">
+                {{ disorder.name }}
+            </a>
+        </h3>
+        <p><span class="category">{{ disorder.category }}</span></p>
+        <p style="margin-top: 10px; color: #666;">{{ disorder.description[:200] }}{% if disorder.description|length > 200 %}...{% endif %}</p>
+    </div>
+    {% endfor %}
+    {% elif system in ['both', 'dsm5'] %}
+    <div class="alert alert-warning">
+        <strong>No DSM-5-TR results found.</strong> Try a different search term.
+    </div>
+    {% endif %}
+    
+    {% if system in ['both', 'icd11'] and results.icd11 %}
+    <div class="section-header">
+        <h2><span class="badge badge-icd11">ICD-11</span> Results ({{ results.icd11|length }})</h2>
+    </div>
+    
+    {% for disorder in results.icd11 %}
+    <div class="card" style="border-left-color: #50C878;">
+        <h3>
+            <span class="code" style="background: #50C878;">{{ disorder.code }}</span>
+            <a href="/disorder/icd11/{{ disorder.code }}" style="color: #50C878; text-decoration: none;">
+                {{ disorder.name }}
+            </a>
+        </h3>
+        <p><span class="category">{{ disorder.category }}</span></p>
+        <p style="margin-top: 10px; color: #666;">{{ disorder.description[:200] }}{% if disorder.description|length > 200 %}...{% endif %}</p>
+    </div>
+    {% endfor %}
+    {% elif system in ['both', 'icd11'] %}
+    <div class="alert alert-warning">
+        <strong>No ICD-11 results found.</strong> Try a different search term.
+    </div>
+    {% endif %}
+{% else %}
+    <div class="alert alert-warning">
+        <strong>No results found.</strong> Try a different search term or browse by category.
+    </div>
+{% endif %}
+{% else %}
+<div class="alert alert-info">
+    <strong>Enter a search term above</strong> to find disorders by name, code, symptoms, or diagnostic criteria.
+</div>
+
+<div style="margin-top: 30px;">
+    <h3>Search Examples:</h3>
+    <ul style="margin: 15px 0; padding-left: 20px;">
+        <li><a href="/search?q=depression">depression</a> - Find all depressive disorders</li>
+        <li><a href="/search?q=anxiety">anxiety</a> - Find anxiety-related disorders</li>
+        <li><a href="/search?q=296.21">296.21</a> - Look up a specific DSM-5-TR code</li>
+        <li><a href="/search?q=6A70">6A70</a> - Look up a specific ICD-11 code</li>
+        <li><a href="/search?q=panic">panic</a> - Search for panic-related disorders</li>
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

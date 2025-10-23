@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Diagnostic Classification Database{% endblock %}
+
+{% block content %}
+<h2>Welcome to the Diagnostic Classification Database</h2>
+<p style="margin: 20px 0; font-size: 1.1em; color: #666;">
+    A comprehensive, searchable database cross-referencing DSM-5-TR and ICD-11 diagnostic classifications 
+    with detailed criteria and descriptions.
+</p>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="number">{{ stats.dsm5_disorders }}</div>
+        <div class="label">DSM-5-TR Disorders</div>
+    </div>
+    <div class="stat-card" style="background: linear-gradient(135deg, #50C878 0%, #3da35d 100%);">
+        <div class="number">{{ stats.icd11_disorders }}</div>
+        <div class="label">ICD-11 Disorders</div>
+    </div>
+    <div class="stat-card" style="background: linear-gradient(135deg, #E94B3C 0%, #c44235 100%);">
+        <div class="number">{{ stats.cross_references }}</div>
+        <div class="label">Cross-References</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <h2>Quick Search</h2>
+</div>
+
+<form action="/search" method="get" class="search-box">
+    <input type="text" name="q" placeholder="Search for disorders, symptoms, or diagnostic codes..." required>
+    <select name="system">
+        <option value="both">Both Systems</option>
+        <option value="dsm5">DSM-5-TR Only</option>
+        <option value="icd11">ICD-11 Only</option>
+    </select>
+    <button type="submit" class="btn">Search</button>
+</form>
+
+<div class="section-header">
+    <h2>Features</h2>
+</div>
+
+<div class="card">
+    <h3>🔍 Full-Text Search</h3>
+    <p>Search across disorder names, descriptions, and diagnostic criteria in both DSM-5-TR and ICD-11.</p>
+</div>
+
+<div class="card">
+    <h3>🔗 Cross-References</h3>
+    <p>View equivalent and related codes between DSM-5-TR and ICD-11 classification systems.</p>
+</div>
+
+<div class="card">
+    <h3>📋 Detailed Criteria</h3>
+    <p>Access complete diagnostic criteria, specifiers, prevalence data, and differential diagnoses.</p>
+</div>
+
+<div class="card">
+    <h3>📚 Browse by Category</h3>
+    <p>Explore disorders organized by category such as Depressive Disorders, Anxiety Disorders, and more.</p>
+</div>
+
+<div class="alert alert-info" style="margin-top: 30px;">
+    <strong>Note:</strong> This database contains sample diagnostic data for educational and reference purposes. 
+    Always consult official DSM-5-TR and ICD-11 resources for clinical practice.
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Not Found{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 60px 20px;">
+    <h1 style="font-size: 4em; color: #667eea;">404</h1>
+    <h2>Page Not Found</h2>
+    <p style="margin: 20px 0; color: #666; font-size: 1.1em;">
+        {% if message %}
+        {{ message }}
+        {% else %}
+        The page you're looking for doesn't exist.
+        {% endif %}
+    </p>
+    <div style="margin-top: 30px;">
+        <a href="/" class="btn">Go to Home</a>
+        <a href="/search" class="btn btn-secondary" style="margin-left: 10px;">Search Database</a>
+    </div>
+</div>
+{% endblock %}
