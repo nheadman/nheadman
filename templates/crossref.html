@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Cross-References{% endblock %}
+
+{% block content %}
+<h2>DSM-5-TR ↔ ICD-11 Cross-References</h2>
+
+<div class="alert alert-info" style="margin: 20px 0;">
+    <strong>About Cross-References:</strong> This page shows the mappings between DSM-5-TR and ICD-11 diagnostic codes. 
+    The relationship type indicates whether codes are "equivalent" (directly corresponding) or "related" (similar but with differences).
+</div>
+
+<div class="section-header">
+    <h3>All Cross-References ({{ xrefs|length }})</h3>
+</div>
+
+{% for xref in xrefs %}
+<div class="card" style="padding: 25px;">
+    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 20px; align-items: center;">
+        <div>
+            <span class="badge badge-dsm5">DSM-5-TR</span>
+            <h3 style="margin: 10px 0;">
+                <span class="code">{{ xref.dsm5_code }}</span>
+            </h3>
+            <a href="/disorder/dsm5/{{ xref.dsm5_code }}" style="color: #667eea; text-decoration: none; font-size: 1.1em;">
+                {{ xref.dsm5_name }}
+            </a>
+        </div>
+        
+        <div style="text-align: center;">
+            <div style="font-size: 2em; color: #999;">↔</div>
+            <span class="badge badge-{{ xref.relationship_type }}" style="margin-top: 10px;">
+                {{ xref.relationship_type }}
+            </span>
+        </div>
+        
+        <div>
+            <span class="badge badge-icd11">ICD-11</span>
+            <h3 style="margin: 10px 0;">
+                <span class="code" style="background: #50C878;">{{ xref.icd11_code }}</span>
+            </h3>
+            <a href="/disorder/icd11/{{ xref.icd11_code }}" style="color: #50C878; text-decoration: none; font-size: 1.1em;">
+                {{ xref.icd11_name }}
+            </a>
+        </div>
+    </div>
+    
+    {% if xref.notes %}
+    <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; color: #666;">
+        <strong>Notes:</strong> {{ xref.notes }}
+    </div>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% if not xrefs %}
+<div class="alert alert-warning">
+    <strong>No cross-references found.</strong>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<style>
+@media (max-width: 768px) {
+    .card > div {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
+{% endblock %}

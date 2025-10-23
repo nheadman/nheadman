@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Browse Categories{% endblock %}
+
+{% block content %}
+<h2>Browse by Category</h2>
+
+<div style="margin: 20px 0;">
+    <a href="/categories?system=dsm5" class="btn {% if system == 'dsm5' %}{% else %}btn-secondary{% endif %}">DSM-5-TR</a>
+    <a href="/categories?system=icd11" class="btn {% if system == 'icd11' %}{% else %}btn-secondary{% endif %}" style="margin-left: 10px;">ICD-11</a>
+</div>
+
+<div class="section-header">
+    <h3>
+        {% if system == 'dsm5' %}
+        <span class="badge badge-dsm5">DSM-5-TR</span> Categories
+        {% else %}
+        <span class="badge badge-icd11">ICD-11</span> Categories
+        {% endif %}
+    </h3>
+</div>
+
+{% for category in categories %}
+<div class="card">
+    <h3>
+        <a href="/category/{{ system }}/{{ category }}" style="color: {% if system == 'dsm5' %}#667eea{% else %}#50C878{% endif %}; text-decoration: none;">
+            {{ category }}
+        </a>
+    </h3>
+</div>
+{% endfor %}
+
+{% if not categories %}
+<div class="alert alert-warning">
+    <strong>No categories found.</strong>
+</div>
+{% endif %}
+{% endblock %}

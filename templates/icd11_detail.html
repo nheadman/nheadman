@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ disorder.name }} - ICD-11{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <span class="badge badge-icd11">ICD-11</span>
+    <span class="badge" style="background: #50C878; color: white;">{{ disorder.code }}</span>
+</div>
+
+<h2>{{ disorder.name }}</h2>
+<p style="margin: 10px 0;"><span class="category">{{ disorder.category }}</span></p>
+
+<div class="section-header">
+    <h3>Description</h3>
+</div>
+<p style="line-height: 1.8;">{{ disorder.description }}</p>
+
+<div class="section-header">
+    <h3>Diagnostic Requirements</h3>
+</div>
+<pre>{{ disorder.diagnostic_requirements }}</pre>
+
+{% if disorder.exclusions %}
+<div class="section-header">
+    <h3>Exclusions</h3>
+</div>
+<p style="line-height: 1.8;">{{ disorder.exclusions }}</p>
+{% endif %}
+
+{% if disorder.coding_notes %}
+<div class="section-header">
+    <h3>Coding Notes</h3>
+</div>
+<p style="line-height: 1.8;">{{ disorder.coding_notes }}</p>
+{% endif %}
+
+{% if xrefs %}
+<div class="section-header">
+    <h3><span class="badge badge-dsm5">DSM-5-TR</span> Cross-References</h3>
+</div>
+<div class="alert alert-info">
+    This disorder corresponds to the following DSM-5-TR code(s):
+</div>
+
+{% for xref in xrefs %}
+<div class="card">
+    <h3>
+        <span class="code">{{ xref.dsm5_code }}</span>
+        <a href="/disorder/dsm5/{{ xref.dsm5_code }}" style="color: #667eea; text-decoration: none;">
+            {{ xref.dsm5_name }}
+        </a>
+    </h3>
+    <p>
+        <span class="badge badge-{{ xref.relationship_type }}">{{ xref.relationship_type }}</span>
+    </p>
+    {% if xref.notes %}
+    <p style="margin-top: 10px; color: #666;">{{ xref.notes }}</p>
+    {% endif %}
+</div>
+{% endfor %}
+{% endif %}
+
+<div style="margin-top: 30px;">
+    <a href="/search" class="btn btn-secondary">← Back to Search</a>
+</div>
+{% endblock %}

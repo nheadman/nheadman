@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category }} - Categories{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <span class="badge {% if system == 'dsm5' %}badge-dsm5{% else %}badge-icd11{% endif %}">
+        {% if system == 'dsm5' %}DSM-5-TR{% else %}ICD-11{% endif %}
+    </span>
+</div>
+
+<h2>{{ category }}</h2>
+
+<div style="margin: 20px 0;">
+    <a href="/categories?system={{ system }}" class="btn btn-secondary">← Back to Categories</a>
+</div>
+
+<div class="section-header">
+    <h3>Disorders in this Category ({{ disorders|length }})</h3>
+</div>
+
+{% for disorder in disorders %}
+<div class="card" style="border-left-color: {% if system == 'dsm5' %}#667eea{% else %}#50C878{% endif %};">
+    <h3>
+        <span class="code" style="background: {% if system == 'dsm5' %}#667eea{% else %}#50C878{% endif %};">{{ disorder.code }}</span>
+        <a href="/disorder/{{ system }}/{{ disorder.code }}" style="color: {% if system == 'dsm5' %}#667eea{% else %}#50C878{% endif %}; text-decoration: none;">
+            {{ disorder.name }}
+        </a>
+    </h3>
+    <p style="margin-top: 10px; color: #666;">{{ disorder.description[:200] }}{% if disorder.description|length > 200 %}...{% endif %}</p>
+</div>
+{% endfor %}
+
+{% if not disorders %}
+<div class="alert alert-warning">
+    <strong>No disorders found in this category.</strong>
+</div>
+{% endif %}
+{% endblock %}

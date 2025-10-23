@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}{{ disorder.name }} - DSM-5-TR{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 20px;">
+    <span class="badge badge-dsm5">DSM-5-TR</span>
+    <span class="badge" style="background: #6c757d; color: white;">{{ disorder.code }}</span>
+</div>
+
+<h2>{{ disorder.name }}</h2>
+<p style="margin: 10px 0;"><span class="category">{{ disorder.category }}</span></p>
+
+<div class="section-header">
+    <h3>Description</h3>
+</div>
+<p style="line-height: 1.8;">{{ disorder.description }}</p>
+
+<div class="section-header">
+    <h3>Diagnostic Criteria</h3>
+</div>
+<pre>{{ disorder.diagnostic_criteria }}</pre>
+
+{% if disorder.specifiers %}
+<div class="section-header">
+    <h3>Specifiers</h3>
+</div>
+<p style="line-height: 1.8;">{{ disorder.specifiers }}</p>
+{% endif %}
+
+{% if disorder.prevalence %}
+<div class="section-header">
+    <h3>Prevalence</h3>
+</div>
+<p style="line-height: 1.8;">{{ disorder.prevalence }}</p>
+{% endif %}
+
+{% if disorder.differential_diagnosis %}
+<div class="section-header">
+    <h3>Differential Diagnosis</h3>
+</div>
+<p style="line-height: 1.8;">{{ disorder.differential_diagnosis }}</p>
+{% endif %}
+
+{% if xrefs %}
+<div class="section-header">
+    <h3><span class="badge badge-icd11">ICD-11</span> Cross-References</h3>
+</div>
+<div class="alert alert-info">
+    This disorder corresponds to the following ICD-11 code(s):
+</div>
+
+{% for xref in xrefs %}
+<div class="card" style="border-left-color: #50C878;">
+    <h3>
+        <span class="code" style="background: #50C878;">{{ xref.icd11_code }}</span>
+        <a href="/disorder/icd11/{{ xref.icd11_code }}" style="color: #50C878; text-decoration: none;">
+            {{ xref.icd11_name }}
+        </a>
+    </h3>
+    <p>
+        <span class="badge badge-{{ xref.relationship_type }}">{{ xref.relationship_type }}</span>
+    </p>
+    {% if xref.notes %}
+    <p style="margin-top: 10px; color: #666;">{{ xref.notes }}</p>
+    {% endif %}
+</div>
+{% endfor %}
+{% endif %}
+
+<div style="margin-top: 30px;">
+    <a href="/search" class="btn btn-secondary">← Back to Search</a>
+</div>
+{% endblock %}
