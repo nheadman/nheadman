@@ -1,0 +1,42 @@
+[
+  {
+    "dsm5_name": "Major Depressive Disorder",
+    "dsm5_code": "296.2",
+    "icd11_name": "Depressive episode",
+    "icd11_code": "6A70",
+    "summary": "Persistent depressed mood with related cognitive and physical symptoms that cause impairment.",
+    "notes": "ICD-11 groups mild, moderate, and severe episodes under 6A70; DSM-5-TR details symptom duration and severity specifiers."
+  },
+  {
+    "dsm5_name": "Generalized Anxiety Disorder",
+    "dsm5_code": "300.02",
+    "icd11_name": "Generalized anxiety disorder",
+    "icd11_code": "6B00",
+    "summary": "Excessive, hard-to-control worry across multiple domains with physical tension and vigilance symptoms.",
+    "notes": "Criteria are similar; ICD-11 emphasizes chronicity over several months and autonomic arousal symptoms."
+  },
+  {
+    "dsm5_name": "Attention-Deficit/Hyperactivity Disorder",
+    "dsm5_code": "314.01",
+    "icd11_name": "Attention deficit hyperactivity disorder",
+    "icd11_code": "6A05",
+    "summary": "Developmentally inappropriate levels of inattention and/or hyperactivity-impulsivity impacting functioning.",
+    "notes": "DSM-5-TR distinguishes presentations by age for symptom counts; ICD-11 uses comparable groupings with fewer symptom examples."
+  },
+  {
+    "dsm5_name": "Posttraumatic Stress Disorder",
+    "dsm5_code": "309.81",
+    "icd11_name": "Post-traumatic stress disorder",
+    "icd11_code": "6B40",
+    "summary": "Intrusive recollections, avoidance, negative mood changes, and arousal symptoms following trauma.",
+    "notes": "ICD-11 uses streamlined symptom clusters and a narrower core symptom set compared to DSM-5-TR."
+  },
+  {
+    "dsm5_name": "Bipolar I Disorder",
+    "dsm5_code": "296.4",
+    "icd11_name": "Bipolar type I disorder",
+    "icd11_code": "6A60",
+    "summary": "At least one manic episode, often with depressive episodes, causing significant impact on functioning.",
+    "notes": "Both systems align on the requirement for a manic episode; terminology differs slightly."
+  }
+]
